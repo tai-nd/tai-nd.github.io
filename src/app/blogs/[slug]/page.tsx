@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path"
+import style from "@/src/css/markdown.module.css"
 
 export function generateStaticParams(): { slug: string }[] {
   const blogs = fs.readdirSync("contents/blogs")
@@ -11,7 +12,11 @@ export function generateStaticParams(): { slug: string }[] {
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const { default: Blog } = await import(`@/contents/blogs/${slug}.mdx`)
-  return <Blog />
+  return (
+    <div className={style.markdown}>
+      <Blog />
+    </div>
+  )
 }
 
 export const dynamicParams = false;
